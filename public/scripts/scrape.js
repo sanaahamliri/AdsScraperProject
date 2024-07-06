@@ -70,7 +70,7 @@ import puppeteer from 'puppeteer';
             return { adsList, logs };
         });
 
-        // Process each ad asynchronously to fetch description
+        // Process each ad asynchronously to fetch description/features/rules/prices/images
         await Promise.all(result.adsList.map(async (ad, index) => {
             const pageNew = await browser.newPage();
             await pageNew.goto(ad.href, { waitUntil: 'networkidle2', timeout: 0 });
