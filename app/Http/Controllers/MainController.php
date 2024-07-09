@@ -50,13 +50,12 @@ class MainController extends Controller
                     'rules' => $item['rules'],
                 ]);
 
-                foreach ($item['images'] as $imageUrl) {
+                foreach ($item['Images'] as $imageUrl) {
                     images::create([
-                        'ad_id' => $ad->id,
+                        'ads_id' => $ad->id,
                         'url' => $imageUrl,
                     ]);
                 }
-
             } catch (\Exception $e) {
                 // Log or handle the error as needed
                 echo 'Error inserting ad: ' . $e->getMessage() . "<br>";
@@ -71,7 +70,7 @@ class MainController extends Controller
 
     public function showAd($id)
     {
-        $ad = ads::find($id);
+        $ad = ads::with('images')->find($id);
 
         if (!$ad) {
             return redirect()->back()->with('error', 'Ad not found');

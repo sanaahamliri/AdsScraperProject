@@ -12,8 +12,8 @@ class images extends Model
         'ad_id', 'url',
     ];
 
-    public function ad()
+    public function images()
     {
-        return $this->belongsTo(ads::class);
+        return $this->hasMany(images::class, 'ads_id');
     }
 }

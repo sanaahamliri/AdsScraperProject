@@ -63,7 +63,7 @@ import puppeteer from 'puppeteer';
                     prices,
                     rules,
                     endDate,
-                    images: [],
+                    Images: [],
                 });
             });
 
@@ -71,7 +71,7 @@ import puppeteer from 'puppeteer';
         });
 
         // Process each ad asynchronously to fetch description/features/rules/prices/images
-        await Promise.all(result.adsList.map(async (ad, index) => {
+        await Promise.all(result.adsList.slice(0, 5).map(async (ad, index) => {
             const pageNew = await browser.newPage();
             await pageNew.goto(ad.href, { waitUntil: 'networkidle2', timeout: 0 });
             await pageNew.waitForSelector('.main-content.ThemeGrid_Container');
@@ -93,10 +93,9 @@ import puppeteer from 'puppeteer';
                 const rulesElement = document.querySelector('.SpelregelsWidget');
                 const rules = rulesElement ? rulesElement.innerText.trim() : 'No rules';
 
-                const imagesElements = document.querySelectorAll('.lightbox-content-thumbnail');
-                const images = Array.from(imagesElements).map(img => img.src);
+                const Images = Array.from(document.querySelectorAll('.osui-carousel__content img')).map(img => img.src);
               
-                return { description, conditions,features, prices, rules, images };
+                return { description, conditions,features, prices, rules, Images };
             });
             await pageNew.close();
             result.adsList[index].description = resultAdsDetails.description;
@@ -104,8 +103,7 @@ import puppeteer from 'puppeteer';
             result.adsList[index].features = resultAdsDetails.features;
             result.adsList[index].prices = resultAdsDetails.prices;
             result.adsList[index].rules = resultAdsDetails.rules;
-            result.adsList[index].images = resultAdsDetails.images;
-
+            result.adsList[index].Images = resultAdsDetails.Images;
 
         }));
 
