@@ -9,6 +9,7 @@ class CreateAdsTable extends Migration
     {
         Schema::create('ads', function (Blueprint $table) {
             $table->id();
+            $table->string('href')->unique();
             $table->string('imageUrl');
             $table->string('title');
             $table->string('price');

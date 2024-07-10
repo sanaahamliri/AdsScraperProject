@@ -10,6 +10,7 @@ class ads extends Model
     use HasFactory;
 
     protected $fillable = [
+        'href',
         'imageUrl',
         'title',
         'price',
